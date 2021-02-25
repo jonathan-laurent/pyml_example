@@ -1,0 +1,6 @@
+(executables
+  (names pywrap)
+  (preprocess (staged_pps ppx_import ppx_let ppx_python ppx_deriving.show))
+  (libraries base pyml pythonlib)
+  (flags :standard -linkall)
+  (modes (native shared_object)))
