@@ -22,12 +22,12 @@ def test_evaluate(n=100, depth=2):
         assert evaluate(e) == evaluate_bis(e)
 
 def profile(n=10_000, depth=5):
-    t = timeit.Timer(lambda: evaluate(random_expr(depth))).timeit(n)
-    t_ = timeit.Timer(lambda: evaluate_(random_expr_(depth))).timeit(n)
-    t_bis = timeit.Timer(lambda: evaluate_bis(random_expr(depth))).timeit(n)
-    print(f"Bis     {t_bis}")
-    print(f"Normal  {t}")
-    print(f"Capsule {t_}")
+    t = timeit.Timer(lambda: evaluate(random_expr(depth))).timeit(n) / n
+    t_ = timeit.Timer(lambda: evaluate_(random_expr_(depth))).timeit(n) / n
+    t_bis = timeit.Timer(lambda: evaluate_bis(random_expr(depth))).timeit(n) / n
+    print(f"Bis     {t_bis*1e6:4.0f}us")
+    print(f"Normal  {t*1e6:4.0f}us")
+    print(f"Capsule {t_*1e6:4.0f}us")
 
 def test_map():
     arr = np.array([1.0, 2.0], dtype=np.double)
