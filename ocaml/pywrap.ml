@@ -24,19 +24,19 @@ let expr_capsule =
 
 let evaluate =
   let%map_open e = positional "e" expr ~docstring:"expression to evaluate" in
-  python_of_int (Expr.eval e)
+  fun () -> python_of_int (Expr.eval e)
 
 let random_expr =
   let%map_open n = positional "n" int ~docstring:"deph of the expression to generate" in
-  python_of_expr (Expr.random_expr n)
+  fun () -> python_of_expr (Expr.random_expr n)
 
 let evaluate_ =
   let%map_open e = positional "e" expr_capsule ~docstring:"" in
-  python_of_int (Expr.eval e)
+  fun () -> python_of_int (Expr.eval e)
 
 let random_expr_ =
   let%map_open n = positional "n" int ~docstring:"" in
-  python_of_expr_capsule (Expr.random_expr n)
+  fun () -> python_of_expr_capsule (Expr.random_expr n)
 
 (* //////////////////////////////////////////////////////////////////////////////////// *)
 
@@ -72,7 +72,7 @@ let genarray_indices t =
 let map_array = 
   let%map_open f = positional "f" float_float_function ~docstring:""
   and t = positional "arr" float_array ~docstring:"" in
-  List.iter (genarray_indices t) ~f:(fun idx ->
+  fun () -> List.iter (genarray_indices t) ~f:(fun idx ->
     let open Bigarray.Genarray in
     set t idx (f (get t idx)));
   Py.none
